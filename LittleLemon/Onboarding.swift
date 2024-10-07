@@ -27,7 +27,12 @@ struct Onboarding: View {
                         UserDefaults.standard.set(lastName, forKey: "lastName")
                         UserDefaults.standard.set(email, forKey: "email")
                         isLoggedIn = true
+                        UserDefaults.standard.set(isLoggedIn, forKey: "kisLoggedIn")
                     }
+                }
+            }.onAppear() {
+                if (UserDefaults.standard.bool(forKey: "kisLoggedIn")) {
+                    isLoggedIn = true
                 }
             }
         }
