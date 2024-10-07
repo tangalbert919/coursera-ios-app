@@ -11,16 +11,23 @@ struct Onboarding: View {
     @State var firstName = ""
     @State var lastName = ""
     @State var email = ""
+    @State var isLoggedIn: Bool = false
     var body: some View {
-        VStack {
-            TextField("First Name", text: $firstName)
-            TextField("Last Name", text: $lastName)
-            TextField("Email", text: $email)
-            Button("Register") {
-                if (!firstName.isEmpty && !lastName.isEmpty && email.isEmpty) {
-                    UserDefaults.standard.set(firstName, forKey: "firstName")
-                    UserDefaults.standard.set(lastName, forKey: "lastName")
-                    UserDefaults.standard.set(email, forKey: "email")
+        NavigationView {
+            VStack {
+                NavigationLink(destination: Home(), isActive: $isLoggedIn) {
+                    EmptyView()
+                }
+                TextField("First Name", text: $firstName)
+                TextField("Last Name", text: $lastName)
+                TextField("Email", text: $email)
+                Button("Register") {
+                    if (!firstName.isEmpty && !lastName.isEmpty && !email.isEmpty) {
+                        UserDefaults.standard.set(firstName, forKey: "firstName")
+                        UserDefaults.standard.set(lastName, forKey: "lastName")
+                        UserDefaults.standard.set(email, forKey: "email")
+                        isLoggedIn = true
+                    }
                 }
             }
         }
