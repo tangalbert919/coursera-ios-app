@@ -13,21 +13,69 @@ struct Menu: View {
 
     var body: some View {
         VStack {
-            Text("Little Lemon")
-            Text("Chicago")
-            Text("We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.")
-                .multilineTextAlignment(.center)
-            TextField("Search menu", text: $searchText)
+            Section {
+                Text("Little Lemon")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .fontDesign(.serif)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                HStack {
+                    VStack {
+                        Text("Chicago")
+                            .font(.title)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Text("We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.")
+                            .multilineTextAlignment(.leading)
+                            .fontWeight(.medium)
+                    }
+                    // image goes here
+                    Image("profile-image-placeholder")
+                        .frame(width: 100, height: 100)
+                }
+                TextField("Search menu", text: $searchText)
+                    .border(Color.black, width: 1)
+                    .background(Color.white)
+            }
+            .padding(10)
+            .background(in: Rectangle())
+            .backgroundStyle(.green)
+            Section {
+                VStack {
+                    Text("Order for Delivery!")
+                        .fontWeight(.bold)
+                        .font(.headline)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    HStack {
+                        Button("Starters") {
+                            // placeholder
+                        }
+                        Button("Mains") {
+                            // placeholder
+                        }
+                        Button("Desserts") {
+                            // placeholder
+                        }
+                        Button("Sides") {
+                            //placeholder
+                        }
+                    }.padding(5)
+                }
+            }
+            .padding(10)
             FetchedObjects(predicate: buildPredicate(), sortDescriptors: buildSortDescriptors()) { (dishes: [Dish]) in
                 List {
                     ForEach(dishes) { dish in
                         HStack {
-                            Text(dish.title!)
+                            VStack {
+                                Text(dish.title!)
+                                    .multilineTextAlignment(.leading)
+                                Text(dish.price!)
+                                    .multilineTextAlignment(.leading)
+                            }
                             Spacer()
-                            Text(dish.price!)
-                            AsyncImage(url: URL(string: dish.image!))
-                                .frame(width: 32, height: 32)
-                                .aspectRatio(contentMode: .fit)
+                            AsyncImage(url: URL(string: dish.image!)) { image in
+                                image.image?.resizable().aspectRatio(contentMode: .fit)
+                            }.frame(width: 64, height: 64, alignment: .trailing)
                         }
                     }
                 }
